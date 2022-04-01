@@ -44,7 +44,6 @@ class MLP(object):
             activations.append(a)
         self.activations = activations
 
-
     def forward_propagate(self, inputs):
         """Computes forward propagation of the network based on input signals.
 
@@ -74,7 +73,6 @@ class MLP(object):
         # return output layer activation
         return activations
 
-
     def back_propagate(self, error):
         """Backpropogates an error signal.
         Args:
@@ -85,9 +83,8 @@ class MLP(object):
 
         # iterate backwards through the network layers
         for i in reversed(range(len(self.derivatives))):
-
             # get activation for previous layer
-            activations = self.activations[i+1]
+            activations = self.activations[i + 1]
 
             # apply sigmoid derivative function
             delta = error * self._sigmoid_derivative(activations)
@@ -99,14 +96,13 @@ class MLP(object):
             current_activations = self.activations[i]
 
             # reshape activations as to have them as a 2d column matrix
-            current_activations = current_activations.reshape(current_activations.shape[0],-1)
+            current_activations = current_activations.reshape(current_activations.shape[0], -1)
 
             # save derivative after applying matrix multiplication
             self.derivatives[i] = np.dot(current_activations, delta_re)
 
             # backpropogate the next error
             error = np.dot(delta, self.weights[i].T)
-
 
     def train(self, inputs, targets, epochs, learning_rate):
         """Trains model running forward prop and backprop
@@ -139,11 +135,10 @@ class MLP(object):
                 sum_errors += self._mse(target, output)
 
             # Epoch complete, report the training error
-            print("Error: {} at epoch {}".format(sum_errors / len(items), i+1))
+            print("Error: {} at epoch {}".format(sum_errors / len(items), i + 1))
 
         print("Training complete!")
         print("=====")
-
 
     def gradient_descent(self, learningRate=1):
         """Learns by descending the gradient
@@ -156,7 +151,6 @@ class MLP(object):
             derivatives = self.derivatives[i]
             weights += derivatives * learningRate
 
-
     def _sigmoid(self, x):
         """Sigmoid activation function
         Args:
@@ -168,7 +162,6 @@ class MLP(object):
         y = 1.0 / (1 + np.exp(-x))
         return y
 
-
     def _sigmoid_derivative(self, x):
         """Sigmoid derivative function
         Args:
@@ -177,7 +170,6 @@ class MLP(object):
             y (float): Output
         """
         return x * (1.0 - x)
-
 
     def _mse(self, target, output):
         """Mean Squared Error loss function
@@ -191,9 +183,8 @@ class MLP(object):
 
 
 if __name__ == "__main__":
-
     # create a dataset to train a network for the sum operation
-    items = np.array([[random()/2 for _ in range(2)] for _ in range(1000)])
+    items = np.array([[random() / 2 for _ in range(2)] for _ in range(1000)])
     targets = np.array([[i[0] + i[1]] for i in items])
 
     # create a Multilayer Perceptron with one hidden layer
@@ -211,5 +202,3 @@ if __name__ == "__main__":
 
     print()
     print("Our network believes that {} + {} is equal to {}".format(input[0], input[1], output[0]))
-
-

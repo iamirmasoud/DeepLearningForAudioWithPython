@@ -2,7 +2,6 @@ import numpy as np
 
 
 class MLP(object):
-
     """A Multilayer Perceptron class.
     """
 
@@ -25,11 +24,10 @@ class MLP(object):
 
         # create random connection weights for the layers
         weights = []
-        for i in range(len(layers)-1):
-            w = np.random.rand(layers[i], layers[i+1])
+        for i in range(len(layers) - 1):
+            w = np.random.rand(layers[i], layers[i + 1])
             weights.append(w)
         self.weights = weights
-
 
     def forward_propagate(self, inputs):
         """Computes forward propagation of the network based on input signals.
@@ -45,7 +43,6 @@ class MLP(object):
 
         # iterate through the network layers
         for w in self.weights:
-
             # calculate matrix multiplication between previous activation and weight matrix
             net_inputs = np.dot(activations, w)
 
@@ -55,7 +52,6 @@ class MLP(object):
         # return output layer activation
         return activations
 
-
     def _sigmoid(self, x):
         """Sigmoid activation function
         Args:
@@ -63,13 +59,12 @@ class MLP(object):
         Returns:
             y (float): Output
         """
-        
+
         y = 1.0 / (1 + np.exp(-x))
         return y
 
 
 if __name__ == "__main__":
-
     # create a Multilayer Perceptron
     mlp = MLP()
 
