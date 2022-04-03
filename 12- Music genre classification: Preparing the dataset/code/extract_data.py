@@ -3,14 +3,16 @@ import os
 import math
 import librosa
 
-DATASET_PATH = "/home/masoud/projects/DeepLearningForAudioWithPython/data/genres"
-JSON_PATH = "/home/masoud/projects/DeepLearningForAudioWithPython/data/data_10.json"
+DATASET_PATH = "../../data/genres"
+JSON_PATH = "../../data/data_10.json"
 SAMPLE_RATE = 22050
 TRACK_DURATION = 30  # measured in seconds
 SAMPLES_PER_TRACK = SAMPLE_RATE * TRACK_DURATION
 
 
-def save_mfcc(dataset_path, json_path, num_mfcc=13, n_fft=2048, hop_length=512, num_segments=5):
+def save_mfcc(
+    dataset_path, json_path, num_mfcc=13, n_fft=2048, hop_length=512, num_segments=5
+):
     """Extracts MFCCs from music dataset and saves them into a json file along with genre labels.
     Because we have small number of tracks, we split each track to `num_segments` to have more samples for
     training deep model.
@@ -31,7 +33,8 @@ def save_mfcc(dataset_path, json_path, num_mfcc=13, n_fft=2048, hop_length=512, 
     }
 
     samples_per_segment = int(SAMPLES_PER_TRACK / num_segments)
-    num_mfcc_vectors_per_segment = math.ceil(samples_per_segment / hop_length)
+    # all mfcc's of all segments must have the same length (this may be violated because of different track lengths)
+    expected_num_mfcc_vectors_per_segment = math.ceil(samples_per_segment / hop_length)
 
     # loop through all genre sub-folder
     for i, (dirpath, dirnames, filenames) in enumerate(os.walk(dataset_path)):
@@ -59,12 +62,17 @@ def save_mfcc(dataset_path, json_path, num_mfcc=13, n_fft=2048, hop_length=512, 
                     finish = start + samples_per_segment
 
                     # extract mfcc
-                    mfcc = librosa.feature.mfcc(y=signal[start:finish], sr=sample_rate, n_mfcc=num_mfcc, n_fft=n_fft,
-                                                hop_length=hop_length)
+                    mfcc = librosa.feature.mfcc(
+                        y=signal[start:finish],
+                        sr=sample_rate,
+                        n_mfcc=num_mfcc,
+                        n_fft=n_fft,
+                        hop_length=hop_length,
+                    )
                     mfcc = mfcc.T
 
                     # store only mfcc feature with expected number of vectors
-                    if len(mfcc) == num_mfcc_vectors_per_segment:
+                    if len(mfcc) == expected_num_mfcc_vectors_per_segment:
                         data["mfcc"].append(mfcc.tolist())
                         data["labels"].append(i - 1)
                         print("{}, segment:{}".format(file_path, d + 1))

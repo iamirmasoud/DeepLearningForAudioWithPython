@@ -3,8 +3,7 @@ from random import random
 
 
 class MLP(object):
-    """A Multilayer Perceptron class.
-    """
+    """A Multilayer Perceptron class."""
 
     def __init__(self, num_inputs=3, hidden_layers=[3, 3], num_outputs=2):
         """Constructor for the MLP. Takes the number of inputs,
@@ -96,7 +95,9 @@ class MLP(object):
             current_activations = self.activations[i]
 
             # reshape activations as to have them as a 2d column matrix
-            current_activations = current_activations.reshape(current_activations.shape[0], -1)
+            current_activations = current_activations.reshape(
+                current_activations.shape[0], -1
+            )
 
             # save derivative after applying matrix multiplication
             self.derivatives[i] = np.dot(current_activations, delta_re)
@@ -201,4 +202,8 @@ if __name__ == "__main__":
     output = mlp.forward_propagate(input)
 
     print()
-    print("Our network believes that {} + {} is equal to {}".format(input[0], input[1], output[0]))
+    print(
+        "Our network believes that {} + {} is equal to {}".format(
+            input[0], input[1], output[0]
+        )
+    )

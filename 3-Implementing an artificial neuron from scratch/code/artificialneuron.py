@@ -1,5 +1,6 @@
 import math
 
+
 def sigmoid(x):
     """Sigmoid activation function
     Args:
@@ -27,7 +28,7 @@ def activate(inputs, weights):
     # compute the sum of the product of the input signals and the weights
     # here we're using pythons "zip" function to iterate two lists together
     for x, w in zip(inputs, weights):
-        h += x*w
+        h += x * w
 
     # process sum through sigmoid activation function
     return sigmoid(h)
