@@ -8,7 +8,7 @@ FIG_SIZE = (15, 10)
 file = "blues.00000.wav"
 
 # load audio file with Librosa
-signal, sample_rate = librosa.load(file, sr=22050) # len of array: sr * T (sec) -> 22050 * 31sec = 661500 samples
+signal, sample_rate = librosa.load(file, sr=22050)  # len of array: sr * T (sec) -> 22050 * 31sec = 661500 samples
 
 # WAVEFORM
 # display waveform
@@ -76,7 +76,7 @@ plt.title("Spectrogram (dB)")
 
 # MFCCs
 # extract 13 MFCCs
-MFCCs = librosa.feature.mfcc(signal, sample_rate, n_fft=n_fft, hop_length=hop_length, n_mfcc=13)
+MFCCs = librosa.feature.mfcc(y=signal, sr=sample_rate, n_fft=n_fft, hop_length=hop_length, n_mfcc=13)
 
 # display MFCCs
 plt.figure(figsize=FIG_SIZE)
