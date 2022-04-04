@@ -1,7 +1,8 @@
+from random import random
+
+import numpy as np
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
-import numpy as np
-from random import random
 
 
 def generate_dataset(num_samples, test_size=0.33):

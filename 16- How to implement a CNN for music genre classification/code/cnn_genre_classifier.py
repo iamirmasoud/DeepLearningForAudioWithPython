@@ -1,7 +1,8 @@
 import json
+
+import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt
 from tensorflow import keras
 
 DATA_PATH = "../../data/data_10.json"
@@ -73,7 +74,7 @@ def prepare_datasets(test_size, validation_size):
         X_train, y_train, test_size=validation_size
     )
 
-    # add an axis to input sets
+    # add an axis to input sets. Keras expects a 4d array: (n_samples, n_time_bins, n_mfcc, n_channels)
     X_train = X_train[..., np.newaxis]
     X_validation = X_validation[..., np.newaxis]
     X_test = X_test[..., np.newaxis]

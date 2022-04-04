@@ -1,6 +1,7 @@
 import json
-import os
 import math
+import os
+
 import librosa
 
 DATASET_PATH = "../../data/genres"

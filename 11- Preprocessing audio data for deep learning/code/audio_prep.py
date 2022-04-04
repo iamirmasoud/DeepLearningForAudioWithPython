@@ -1,7 +1,7 @@
-import numpy as np
-import librosa.display
 import librosa
+import librosa.display
 import matplotlib.pyplot as plt
+import numpy as np
 
 FIG_SIZE = (15, 10)
 

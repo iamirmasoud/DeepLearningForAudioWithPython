@@ -1,7 +1,10 @@
+# link: https://www.youtube.com/watch?v=DY82Goknf0s&list=PL-wATfeyAMNrtbkCNsLcpoAyBBRJZVlnf&index=17
+
 import json
+
+import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt
 from tensorflow import keras
 
 DATA_PATH = "../../data/data_10.json"
@@ -101,7 +104,6 @@ def build_model(input_shape):
 
 
 if __name__ == "__main__":
-
     # get train, validation, test splits
     X_train, X_validation, X_test, y_train, y_validation, y_test = prepare_datasets(
         0.25, 0.2
